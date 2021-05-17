@@ -1,0 +1,22 @@
+<html>
+    <body>
+        <input id="msg" type="text">
+        <button id="send-btn">Send</button>
+        <p>Messages:</p>
+        <div id="messages"></div>
+
+        <script type="text/javascript">
+            var conn = new WebSocket("ws://{{.Host}}/ws");
+            var msg = document.getElementById("msg");
+            var btn = document.getElementById("send-btn");
+            var messages = document.getElementById("messages");
+            conn.onmessage = function(event) {
+                console.log("WebSocket message received:", event);
+                messages.innerHTML += `<p>${event.data}</p>`
+            };
+            btn.onclick = function(event) {
+                conn.send(msg.value)
+            }
+        </script>
+    </body>
+</html>
